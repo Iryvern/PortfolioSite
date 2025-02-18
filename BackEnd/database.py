@@ -1,11 +1,16 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
-# Replace with your MongoDB connection string
-MONGO_URI = "mongodb+srv://iryvern:kTNuv6ZUpY5DItS3@mongocluster.iccjm.mongodb.net/"
+# Load environment variables from .env
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")  # Fetch the URI from environment variables
 
 client = MongoClient(MONGO_URI)
-db = client["mydatabase"]  # Create or connect to the database
-users_collection = db["users"]  # Create or connect to the users collection
+db = client["mydatabase"]
+users_collection = db["users"]
+
 
 # Test connection
 def test_connection():

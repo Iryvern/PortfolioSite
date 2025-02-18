@@ -64,12 +64,3 @@ body {
   background: #0056a3;
 }
 
-/* Footer */
-.footer {
-  margin-top: auto;
-  padding: 1rem;
-  background: #222;
-  color: white;
-  text-align: center;
-  font-size: 0.9rem;
-}
