@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  background-color: #f0f2f5;
 }
 
 /* Container */
@@ -19,6 +19,7 @@ body {
   padding: 1.5rem;
   text-align: center;
   font-size: 1.8rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 /* Navigation */
@@ -34,7 +35,7 @@ body {
   text-decoration: none;
   color: #0078D7;
   font-weight: bold;
-  transition: 0.3s;
+  transition: color 0.3s;
 }
 
 .nav a:hover {
@@ -48,19 +49,62 @@ body {
   text-align: center;
 }
 
-.button {
+/* Form Containers for Register and Login */
+.register-form,
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.register-form input,
+.register-form button,
+.login-form input,
+.login-form button {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Ensures padding is included in width */
+  transition: border 0.3s;
+}
+
+
+
+.register-form input:focus,
+.login-form input:focus {
+  border: 1px solid #0078D7;
+  outline: none;
+}
+
+.register-form button,
+.login-form button {
   background: #0078D7;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1rem;
   border-radius: 5px;
-  transition: 0.3s;
+  transition: background 0.3s;
 }
 
-.button:hover {
+.register-form button:hover,
+.login-form button:hover {
   background: #0056a3;
+}
+
+/* Response Message */
+p[style*="color: red"] {
+  margin: 0.5rem 0;
+  color: red;
+  font-size: 0.9rem;
 }
 

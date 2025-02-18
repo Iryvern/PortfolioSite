@@ -24,7 +24,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="register-form">
       <h2>Login</h2>
       {responseMessage() && <p style={{ color: "red" }}>{responseMessage()}</p>}
       <input type="text" placeholder="Username" onInput={(e) => setUsername(e.target.value)} />
