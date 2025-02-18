@@ -2,8 +2,18 @@ from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from bson.objectid import ObjectId
 from database import users_collection, client  # Import MongoDB client
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (or specify frontend URL)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Pydantic models
 class UserCreate(BaseModel):
@@ -20,7 +30,7 @@ def user_helper(user) -> dict:
         "username": user["username"]
     }
 
-@app.post("/register/", response_model=UserResponse)
+@app.post("/register", response_model=UserResponse)
 def register_user(user: UserCreate):
     if users_collection.find_one({"username": user.username}):
         raise HTTPException(status_code=400, detail="Username already exists")
@@ -29,7 +39,7 @@ def register_user(user: UserCreate):
     created_user = users_collection.find_one({"_id": result.inserted_id})
     return user_helper(created_user)
 
-@app.post("/login/")
+@app.post("/login")
 def login_user(user: UserCreate):
     db_user = users_collection.find_one({"username": user.username, "password": user.password})
     if not db_user:

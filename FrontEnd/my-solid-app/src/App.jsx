@@ -3,6 +3,7 @@ import "./App.css";
 import Register from "./Register";
 import About from "./About";  // Import About page
 import Contact from "./Contact";
+import Login from "./Login";
 
 function App() {
   const [count, setCount] = createSignal(0);
@@ -13,9 +14,11 @@ function App() {
       case "#register":
         return <Register />;
       case "#about":
-        return <About />;  // Render About page
+        return <About />;  
       case "#contact":
-          return <Contact />;  // Render About page
+        return <Contact />; 
+      case "#login":
+        return <Login />; 
       default:
         return (
           <>
@@ -42,12 +45,13 @@ function App() {
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <a href="#register">Register</a>
+        <a href="#login">Login</a>
       </nav>
       <main className="main">
         {renderPage()}
       </main>
       <footer className="footer">
-        &copy; 2025 My Solid.js Website
+        &copy; 2025 Portfolio Website 
       </footer>
     </div>
   );
