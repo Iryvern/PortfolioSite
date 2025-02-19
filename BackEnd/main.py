@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from bson.objectid import ObjectId
 from database import users_collection, client
@@ -8,13 +8,15 @@ import hashlib
 from dotenv import load_dotenv
 import jwt
 import datetime
-from fastapi import Depends
+from fastapi.security import OAuth2PasswordBearer
 
-#uvicorn main:app --reload
+# uvicorn main:app --reload
 
 load_dotenv()
 
 app = FastAPI()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,6 +34,13 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     username: str
     password: str
+
+class UserUpdateEmail(BaseModel):
+    email: str
+
+class UserUpdatePassword(BaseModel):
+    old_password: str
+    new_password: str
 
 class UserResponse(BaseModel):
     id: str
@@ -55,6 +64,18 @@ def create_access_token(data: dict, expires_delta: int = 24):
     expire = datetime.datetime.utcnow() + datetime.timedelta(hours=expires_delta)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def verify_token(token: str = Depends(oauth2_scheme)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return username
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 @app.post("/register", response_model=UserResponse)
 def register_user(user: UserCreate):
@@ -88,6 +109,19 @@ def login_user(user: UserLogin):
         "access_token": token,
         "token_type": "bearer"
     }
+
+@app.post("/update-email")
+def update_email(user: UserUpdateEmail, username: str = Depends(verify_token)):
+    users_collection.update_one({"username": hash_sha256(username)}, {"$set": {"email": hash_sha256(user.email)}})
+    return {"message": "Email updated successfully"}
+
+@app.post("/update-password")
+def update_password(user: UserUpdatePassword, username: str = Depends(verify_token)):
+    db_user = users_collection.find_one({"username": hash_sha256(username)})
+    if not db_user or db_user["password"] != hash_sha256(user.old_password):
+        raise HTTPException(status_code=401, detail="Invalid old password")
+    users_collection.update_one({"username": hash_sha256(username)}, {"$set": {"password": hash_sha256(user.new_password)}})
+    return {"message": "Password updated successfully"}
 
 @app.get("/")
 def home():

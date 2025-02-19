@@ -7,7 +7,6 @@ import Login from "./Login";
 import Profile from "./Profile";
 
 function App() {
-  const [count, setCount] = createSignal(0);
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
   const [username, setUsername] = createSignal("");
 
@@ -41,10 +40,9 @@ function App() {
       default:
         return (
           <>
-            <h2>Welcome to My Solid.js Website</h2>
-            <p>This is a simple front page built with Solid.js.</p>
-            <p>Counter: {count()}</p>
-            <button className="button" onClick={() => setCount(count() + 1)}>Increment</button>
+            <h2>Welcome to My Portfolio Website</h2>
+            <p>This website serves as a showcase of my expertise in Artificial Intelligence, Software Engineering, and Web Development.</p>
+            <p>Explore my projects, experience, and technical skills, or get in touch via the contact page.</p>
           </>
         );
     }
@@ -57,7 +55,7 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>My Solid.js Website</h1>
+        <h1>Experience Showcase Website</h1>
       </header>
       <nav className="nav">
         <a href="#home">Home</a>
