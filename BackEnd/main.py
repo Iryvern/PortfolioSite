@@ -6,6 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import hashlib
 from dotenv import load_dotenv
+import jwt
+import datetime
+from fastapi import Depends
+
+#uvicorn main:app --reload
 
 load_dotenv()
 
@@ -41,6 +46,16 @@ def user_helper(user) -> dict:
 def hash_sha256(data: str) -> str:
     return hashlib.sha256(data.encode()).hexdigest()
 
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = "HS256"
+
+def create_access_token(data: dict, expires_delta: int = 24):
+    """Generate JWT token with an expiration time of 24 hours"""
+    to_encode = data.copy()
+    expire = datetime.datetime.utcnow() + datetime.timedelta(hours=expires_delta)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
 @app.post("/register", response_model=UserResponse)
 def register_user(user: UserCreate):
     if users_collection.find_one({"username": hash_sha256(user.username)}):
@@ -63,7 +78,16 @@ def login_user(user: UserLogin):
         raise HTTPException(status_code=404, detail="User does not exist")
     if db_user["password"] != hash_sha256(user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    return {"message": "Login successful", "user": user_helper(db_user)}
+    
+    # Generate JWT token
+    token = create_access_token({"sub": user.username})
+
+    return {
+        "message": "Login successful",
+        "user": user_helper(db_user),
+        "access_token": token,
+        "token_type": "bearer"
+    }
 
 @app.get("/")
 def home():

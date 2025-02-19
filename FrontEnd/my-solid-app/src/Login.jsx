@@ -15,7 +15,7 @@ function Login() {
       const result = await response.json();
       if (response.ok) {
         document.cookie = `username=${username()}; path=/;`;
-        //document.cookie = `access_token=${result.access_token}; path=/;`;
+        document.cookie = `access_token=${result.access_token}; path=/;`;
         setResponseMessage("Login successful!");
       } else {
         setResponseMessage(result.detail || "Invalid credentials.");
