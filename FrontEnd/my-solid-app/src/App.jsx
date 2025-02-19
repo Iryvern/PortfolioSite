@@ -1,13 +1,30 @@
 import { createSignal, onCleanup } from "solid-js";
 import "./App.css";
 import Register from "./Register";
-import About from "./About";  // Import About page
+import About from "./About";  
 import Contact from "./Contact";
 import Login from "./Login";
+import Profile from "./Profile";
 
 function App() {
   const [count, setCount] = createSignal(0);
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
+  const [username, setUsername] = createSignal("");
+
+  // Function to get username from cookies
+  const getUsernameFromCookies = () => {
+    const cookies = document.cookie.split("; ");
+    for (let cookie of cookies) {
+      let [key, value] = cookie.split("=");
+      if (key === "username") {
+        return value;
+      }
+    }
+    return "";
+  };
+
+  // Update username state on load
+  setUsername(getUsernameFromCookies());
 
   const renderPage = () => {
     switch (currentPage()) {
@@ -19,6 +36,8 @@ function App() {
         return <Contact />; 
       case "#login":
         return <Login />; 
+      case "#myprofile":
+        return username() ? <Profile /> : <h2>Access Denied</h2>; 
       default:
         return (
           <>
@@ -44,8 +63,9 @@ function App() {
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <a href="#register">Register</a>
-        <a href="#login">Login</a>
+        {!username() && <a href="#register">Register</a>}
+        {!username() && <a href="#login">Login</a>}
+        {username() && <a href="#myprofile">My Profile</a>}
       </nav>
       <main className="main">
         {renderPage()}
