@@ -5,6 +5,7 @@ import About from "./About";
 import Contact from "./Contact";
 import Login from "./Login";
 import Profile from "./Profile";
+import LLM from "./LLM"
 
 function App() {
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
@@ -29,6 +30,8 @@ function App() {
     switch (currentPage()) {
       case "#register":
         return <Register />;
+      case "#llm":
+        return <LLM />;
       case "#about":
         return <About />;  
       case "#contact":
@@ -61,6 +64,7 @@ function App() {
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
+        <a href="#llm">LLM</a>
         {!username() && <a href="#register">Register</a>}
         {!username() && <a href="#login">Login</a>}
         {username() && <a href="#myprofile">My Profile</a>}

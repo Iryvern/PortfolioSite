@@ -9,8 +9,11 @@ from dotenv import load_dotenv
 import jwt
 import datetime
 from fastapi.security import OAuth2PasswordBearer
+from models import generate_response  
 
 # uvicorn main:app --reload
+# uvicorn main:app --reload --log-level debug
+
 
 load_dotenv()
 
@@ -25,6 +28,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class LLMRequest(BaseModel):
+    prompt: str
 
 class UserCreate(BaseModel):
     username: str
@@ -122,6 +128,15 @@ def update_password(user: UserUpdatePassword, username: str = Depends(verify_tok
         raise HTTPException(status_code=401, detail="Invalid old password")
     users_collection.update_one({"username": hash_sha256(username)}, {"$set": {"password": hash_sha256(user.new_password)}})
     return {"message": "Password updated successfully"}
+
+@app.post("/generate")
+def generate_text(request: LLMRequest):
+    """Endpoint to generate text using the Hugging Face API."""
+    response = generate_response(request.prompt)
+    if "Error" in response:
+        raise HTTPException(status_code=500, detail=response)
+    return {"response": response}
+
 
 @app.get("/")
 def home():

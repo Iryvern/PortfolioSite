@@ -252,3 +252,50 @@ button:hover {
 .logout-button:hover {
   background: #c9302c;
 }
+
+/* LLM Page Styles */
+.llm-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.llm-container h2 {
+  color: #0078D7;
+  margin-bottom: 1rem;
+}
+
+.llm-container input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.llm-container button {
+  background: #0078D7;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.llm-container button:hover {
+  background: #0056a3;
+}
+
+.llm-response {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f4f4f4;
+  border-radius: 5px;
+}
