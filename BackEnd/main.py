@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
-from bson.objectid import ObjectId
 from database import users_collection, client
 from fastapi.middleware.cors import CORSMiddleware
 import os
