@@ -6,10 +6,12 @@ import Contact from "./Contact";
 import Login from "./Login";
 import Profile from "./Profile";
 import LLM from "./LLM";
+import Admin from "./Admin"; // New Admin Page
 
 function App() {
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
   const [username, setUsername] = createSignal("");
+  const [userRole, setUserRole] = createSignal(""); // Store user role
   const [backendStatus, setBackendStatus] = createSignal("Checking backend connection...");
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
@@ -29,17 +31,18 @@ function App() {
     }
   };
 
-  // Function to get username from cookies
-  const getUsernameFromCookies = () => {
+  // Function to get username and role from cookies
+  const getCookieValue = (key) => {
     const cookie = document.cookie
       .split("; ")
-      .find(row => row.startsWith("username="));
+      .find(row => row.startsWith(`${key}=`));
     return cookie ? cookie.split("=")[1] : "";
   };
 
-  // Update username and check backend on mount
+  // Update username and user role on mount
   onMount(() => {
-    setUsername(getUsernameFromCookies());
+    setUsername(getCookieValue("username"));
+    setUserRole(getCookieValue("user_role")); // Fetch user role from cookie
     checkBackendConnection();
     window.addEventListener("hashchange", updatePage);
   });
@@ -56,7 +59,9 @@ function App() {
       case "#register":
         return <Register />;
       case "#llm":
-        return username() ? <LLM /> : <h2>Access Denied</h2>; 
+        return username() ? <LLM /> : <h2>Access Denied</h2>;
+      case "#admin":
+        return userRole() === "admin" ? <Admin /> : <h2>Access Denied</h2>;
       case "#about":
         return <About />;  
       case "#contact":
@@ -86,7 +91,8 @@ function App() {
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        {username() && <a href="#llm">LLM</a>} {/* LLM tab only appears if logged in */}
+        {username() && <a href="#llm">LLM</a>}
+        {userRole() === "admin" && <a href="#admin">Admin</a>} {/* Only visible to Admins */}
         {!username() && <a href="#register">Register</a>}
         {!username() && <a href="#login">Login</a>}
         {username() && <a href="#myprofile">My Profile</a>}

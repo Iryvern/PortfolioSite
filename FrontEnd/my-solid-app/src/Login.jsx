@@ -18,6 +18,7 @@ function Login() {
       if (response.ok) {
         document.cookie = `username=${username()}; path=/;`;
         document.cookie = `access_token=${result.access_token}; path=/;`;
+        document.cookie = `user_role=${result.role}; path=/;`; // Store user role
 
         // Redirect to main page and refresh
         window.location.hash = "#home";

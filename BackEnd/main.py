@@ -88,11 +88,14 @@ def register_user(user: UserCreate):
         raise HTTPException(status_code=400, detail="Username already exists")
     if users_collection.find_one({"email": hash_sha256(user.email)}):
         raise HTTPException(status_code=400, detail="Email already exists")
+
     new_user = {
         "username": hash_sha256(user.username),
         "email": hash_sha256(user.email),
-        "password": hash_sha256(user.password)
+        "password": hash_sha256(user.password),
+        "role": "user" 
     }
+
     result = users_collection.insert_one(new_user)
     created_user = users_collection.find_one({"_id": result.inserted_id})
     return user_helper(created_user)
@@ -105,15 +108,20 @@ def login_user(user: UserLogin):
     if db_user["password"] != hash_sha256(user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
+    # Extract user role (defaults to "User" if not found)
+    user_role = db_user.get("role", "User")
+
     # Generate JWT token
     token = create_access_token({"sub": user.username})
 
     return {
         "message": "Login successful",
         "user": user_helper(db_user),
+        "role": user_role,
         "access_token": token,
         "token_type": "bearer"
     }
+
 
 @app.post("/update-email")
 def update_email(user: UserUpdateEmail, username: str = Depends(verify_token)):

@@ -19,9 +19,15 @@ function Profile() {
     return "";
   };
 
+  const clearCookies = () => {
+    document.cookie.split(";").forEach((cookie) => {
+      const [name] = cookie.split("=");
+      document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    });
+  };
+
   const handleLogout = () => {
-    document.cookie = "username=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    clearCookies();
     window.location.hash = "#home";
     window.location.reload();
   };

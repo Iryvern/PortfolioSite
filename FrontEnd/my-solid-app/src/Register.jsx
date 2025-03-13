@@ -1,4 +1,5 @@
 import { createSignal, createMemo } from "solid-js";
+
 const backendUrl = "https://backend-production-47ab.up.railway.app";
 
 function Register() {
@@ -7,7 +8,9 @@ function Register() {
   const [password, setPassword] = createSignal("");
   const [repeatPassword, setRepeatPassword] = createSignal("");
   const [responseMessage, setResponseMessage] = createSignal("");
+  const [showEmailError, setShowEmailError] = createSignal(false); // State for email validation message
 
+  // Memoized password validation checks
   const passwordValidations = createMemo(() => {
     const value = password();
     return {
@@ -15,11 +18,21 @@ function Register() {
       upper: /[A-Z]/.test(value),
       lower: /[a-z]/.test(value),
       number: /\d/.test(value),
-      special: /[!@#$%^&*(),.?\":{}|<>]/.test(value)
+      special: /[!@#$%^&*(),.?\":{}|<>]/.test(value),
     };
   });
 
+  // Function to check email validity
+  const isEmailValid = createMemo(() => email().includes("@"));
+
   const handleRegister = async () => {
+    setShowEmailError(true); // Show the email error only when the register button is clicked
+
+    if (!isEmailValid()) {
+      setResponseMessage("Invalid email address.");
+      return;
+    }
+
     if (password() !== repeatPassword()) {
       setResponseMessage("Passwords do not match.");
       return;
@@ -52,6 +65,9 @@ function Register() {
       {responseMessage() && <p style={{ color: "red" }}>{responseMessage()}</p>}
       <input type="text" placeholder="Username" onInput={(e) => setUsername(e.target.value)} />
       <input type="email" placeholder="Email" onInput={(e) => setEmail(e.target.value)} />
+      {showEmailError() && !isEmailValid() && (
+        <p style={{ color: "red" }}>❌ Invalid Email (Must contain '@')</p>
+      )}
       <input type="password" placeholder="Password" onInput={(e) => setPassword(e.target.value)} />
       <ul>
         {renderBullet("At least 5 characters", passwordValidations().length)}
