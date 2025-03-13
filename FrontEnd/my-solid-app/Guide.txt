@@ -1,0 +1,3 @@
+docker build -t iryvernk/frontend:latest .
+docker run -p 3000:3000 --name frontend iryvernk/frontend:latest
+docker push iryvernk/frontend:latest

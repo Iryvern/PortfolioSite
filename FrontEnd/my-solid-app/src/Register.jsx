@@ -1,4 +1,5 @@
 import { createSignal, createMemo } from "solid-js";
+const backendUrl = "https://backend-production-47ab.up.railway.app";
 
 function Register() {
   const [username, setUsername] = createSignal("");
@@ -25,7 +26,7 @@ function Register() {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/register", {
+      const response = await fetch(`${backendUrl}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username(), email: email(), password: password() }),

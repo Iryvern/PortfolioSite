@@ -1,5 +1,7 @@
 import { createSignal } from "solid-js";
 
+const backendUrl = "https://backend-production-47ab.up.railway.app";
+
 function LLM() {
   const [message, setMessage] = createSignal("");
   const [response, setResponse] = createSignal("");
@@ -12,7 +14,7 @@ function LLM() {
     setResponse(""); // Clear previous response
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/generate", {
+      const res = await fetch(`${backendUrl}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: message() }),

@@ -1,5 +1,7 @@
 import { createSignal } from "solid-js";
 
+const backendUrl = "https://backend-production-47ab.up.railway.app";
+
 function Profile() {
   const [newEmail, setNewEmail] = createSignal("");
   const [oldPassword, setOldPassword] = createSignal("");
@@ -26,7 +28,7 @@ function Profile() {
 
   const handleUpdateEmail = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/update-email", {
+      const response = await fetch(`${backendUrl}/update-email`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json", 
@@ -43,7 +45,7 @@ function Profile() {
 
   const handleUpdatePassword = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/update-password", {
+      const response = await fetch(`${backendUrl}/update-password`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json", 
