@@ -6,13 +6,13 @@ import Contact from "./Contact";
 import Login from "./Login";
 import Profile from "./Profile";
 import LLM from "./LLM";
-import Admin from "./Admin"; // New Admin Page
+import Admin from "./Admin"; // Admin Page
 
 function App() {
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
   const [username, setUsername] = createSignal("");
   const [userRole, setUserRole] = createSignal(""); // Store user role
-  const [backendStatus, setBackendStatus] = createSignal("Checking backend connection...");
+  const [backendStatus, setBackendStatus] = createSignal(null);
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
 
@@ -22,12 +22,12 @@ function App() {
       const res = await fetch(`${backendUrl}`);
       const data = await res.json();
       if (res.ok && data.status.includes("MongoDB connected successfully")) {
-        setBackendStatus("✅ Backend Connected Successfully!");
+        setBackendStatus("✅");
       } else {
-        setBackendStatus("❌ Backend Connection Failed.");
+        setBackendStatus("❌");
       }
     } catch (error) {
-      setBackendStatus("❌ Backend Connection Failed.");
+      setBackendStatus("❌");
     }
   };
 
@@ -72,12 +72,30 @@ function App() {
         return username() ? <Profile /> : <h2>Access Denied</h2>; 
       default:
         return (
-          <>
+          <div className="homepage">
             <h2>Welcome to My Portfolio Website</h2>
-            <p>This website serves as a showcase of my expertise in Artificial Intelligence, Software Engineering, and Web Development.</p>
-            <p>Explore my projects, experience, and technical skills, or get in touch via the contact page.</p>
-            <p><strong>Backend Status:</strong> {backendStatus()}</p>
-          </>
+            <p>Explore my work in AI, Software Development, and Web Technologies.</p>
+
+            <div className="homepage-buttons">
+              <div className="homepage-card">
+                <h3>📖 About Me</h3>
+                <p>Learn about my background, expertise, and professional journey.</p>
+                <a href="#about"><button>Visit About Page</button></a>
+              </div>
+
+              <div className="homepage-card">
+                <h3>📩 Contact Me</h3>
+                <p>Have questions? Get in touch with me via email or LinkedIn.</p>
+                <a href="#contact"><button>Go to Contact Page</button></a>
+              </div>
+
+              <div className="homepage-card">
+                <h3>🔑 Login to Explore AI</h3>
+                <p>Access AI-powered features like the chatbot by logging in.</p>
+                <a href="#login"><button>Login to Continue</button></a>
+              </div>
+            </div>
+          </div>
         );
     }
   };
@@ -101,7 +119,8 @@ function App() {
         {renderPage()}
       </main>
       <footer className="footer">
-        &copy; 2025 Portfolio Website 
+        <span>&copy; 2025 Portfolio Website</span>
+        <span className="server-status">Server Status: {backendStatus()}</span>
       </footer>
     </div>
   );
