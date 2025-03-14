@@ -11,8 +11,9 @@ import Admin from "./Admin"; // Admin Page
 function App() {
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
   const [username, setUsername] = createSignal("");
-  const [userRole, setUserRole] = createSignal(""); // Store user role
+  const [userRole, setUserRole] = createSignal(""); 
   const [backendStatus, setBackendStatus] = createSignal(null);
+  const [hoveredIndex, setHoveredIndex] = createSignal(null); // Track hovered card
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
 
@@ -21,11 +22,7 @@ function App() {
     try {
       const res = await fetch(`${backendUrl}`);
       const data = await res.json();
-      if (res.ok && data.status.includes("MongoDB connected successfully")) {
-        setBackendStatus("✅");
-      } else {
-        setBackendStatus("❌");
-      }
+      setBackendStatus(res.ok && data.status.includes("MongoDB connected successfully") ? "✅" : "❌");
     } catch (error) {
       setBackendStatus("❌");
     }
@@ -39,49 +36,12 @@ function App() {
     return cookie ? cookie.split("=")[1] : "";
   };
 
-  // Generates a random color
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-
-  // Adds hover event listeners
-  const addHoverEffect = () => {
-    const homepageCards = document.querySelectorAll(".homepage-card");
-    const mainElement = document.querySelector(".main");
-
-    if (!homepageCards || !mainElement) return;
-
-    homepageCards.forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        const randomColor = getRandomColor();
-        mainElement.style.transition = "background-color 0.5s ease-in-out"; // Fade-in effect
-        mainElement.style.backgroundColor = randomColor;
-      });
-
-      card.addEventListener("mouseleave", () => {
-        mainElement.style.transition = "background-color 0.5s ease-in-out"; // Fade-out effect
-        mainElement.style.backgroundColor = "";
-      });
-    });
-  };
-
-  // Ensures event listeners are reattached on page change
-  createEffect(() => {
-    addHoverEffect();
-  });
-
   // Update username and user role on mount
   onMount(() => {
     setUsername(getCookieValue("username"));
-    setUserRole(getCookieValue("user_role")); // Fetch user role from cookie
+    setUserRole(getCookieValue("user_role"));
     checkBackendConnection();
     window.addEventListener("hashchange", updatePage);
-    addHoverEffect();
   });
 
   // Cleanup event listener on unmount
@@ -89,12 +49,7 @@ function App() {
     window.removeEventListener("hashchange", updatePage);
   });
 
-  const updatePage = () => {
-    setCurrentPage(window.location.hash);
-    setTimeout(() => {
-      addHoverEffect(); // Ensure hover effect is applied after navigation
-    }, 100);
-  };
+  const updatePage = () => setCurrentPage(window.location.hash);
 
   const renderPage = () => {
     switch (currentPage()) {
@@ -119,23 +74,22 @@ function App() {
             <p>Explore my work in AI, Software Development, and Web Technologies.</p>
 
             <div className="homepage-buttons">
-              <div className="homepage-card">
-                <h3>📖 About Me</h3>
-                <p>Learn about my background, expertise, and professional journey.</p>
-                <a href="#about"><button>Visit About Page</button></a>
-              </div>
-
-              <div className="homepage-card">
-                <h3>📩 Contact Me</h3>
-                <p>Have questions? Get in touch with me via email or LinkedIn.</p>
-                <a href="#contact"><button>Go to Contact Page</button></a>
-              </div>
-
-              <div className="homepage-card">
-                <h3>🔑 Login to Explore AI</h3>
-                <p>Access AI-powered features like the chatbot by logging in.</p>
-                <a href="#login"><button>Login to Continue</button></a>
-              </div>
+              {[
+                { title: "📖 About Me", text: "Learn about my background, expertise, and professional journey.", link: "#about" },
+                { title: "📩 Contact Me", text: "Have questions? Get in touch with me via email or LinkedIn.", link: "#contact" },
+                { title: "🔑 Login to Explore AI", text: "Access AI-powered features like the chatbot by logging in.", link: "#login" }
+              ].map((item, index) => (
+                <div 
+                  key={index}
+                  className={`homepage-card ${hoveredIndex() !== null && hoveredIndex() !== index ? "dimmed" : ""}`} 
+                  onMouseEnter={() => setHoveredIndex(index)} 
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                  <a href={item.link}><button>Go</button></a>
+                </div>
+              ))}
             </div>
           </div>
         );
