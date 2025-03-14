@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup } from "solid-js";
+import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
 import "./App.css";
 import Register from "./Register";
 import About from "./About";  
@@ -39,12 +39,49 @@ function App() {
     return cookie ? cookie.split("=")[1] : "";
   };
 
+  // Generates a random color
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  // Adds hover event listeners
+  const addHoverEffect = () => {
+    const homepageCards = document.querySelectorAll(".homepage-card");
+    const mainElement = document.querySelector(".main");
+
+    if (!homepageCards || !mainElement) return;
+
+    homepageCards.forEach(card => {
+      card.addEventListener("mouseenter", () => {
+        const randomColor = getRandomColor();
+        mainElement.style.transition = "background-color 0.5s ease-in-out"; // Fade-in effect
+        mainElement.style.backgroundColor = randomColor;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        mainElement.style.transition = "background-color 0.5s ease-in-out"; // Fade-out effect
+        mainElement.style.backgroundColor = "";
+      });
+    });
+  };
+
+  // Ensures event listeners are reattached on page change
+  createEffect(() => {
+    addHoverEffect();
+  });
+
   // Update username and user role on mount
   onMount(() => {
     setUsername(getCookieValue("username"));
     setUserRole(getCookieValue("user_role")); // Fetch user role from cookie
     checkBackendConnection();
     window.addEventListener("hashchange", updatePage);
+    addHoverEffect();
   });
 
   // Cleanup event listener on unmount
@@ -52,7 +89,12 @@ function App() {
     window.removeEventListener("hashchange", updatePage);
   });
 
-  const updatePage = () => setCurrentPage(window.location.hash);
+  const updatePage = () => {
+    setCurrentPage(window.location.hash);
+    setTimeout(() => {
+      addHoverEffect(); // Ensure hover effect is applied after navigation
+    }, 100);
+  };
 
   const renderPage = () => {
     switch (currentPage()) {
