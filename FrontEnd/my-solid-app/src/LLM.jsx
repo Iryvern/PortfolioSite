@@ -4,30 +4,38 @@ const backendUrl = "https://backend-production-47ab.up.railway.app";
 
 function LLM() {
   const [message, setMessage] = createSignal("");
-  const [response, setResponse] = createSignal("");
+  const [messages, setMessages] = createSignal([]); // Stores conversation history
   const [loading, setLoading] = createSignal(false);
 
   const handleSendMessage = async () => {
     if (!message().trim()) return;
 
+    const userMessage = { text: message(), sender: "user" };
+    setMessages((prevMessages) => [...prevMessages, userMessage]); // Add user message only once
+
     setLoading(true);
-    setResponse(""); // Clear previous response
+    const userInput = message(); // Store user input before clearing it
+    setMessage(""); // Clear input field
 
     try {
       const res = await fetch(`${backendUrl}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: message() }),
+        body: JSON.stringify({ prompt: userInput }), // Send stored user input
       });
 
       const data = await res.json();
-      if (res.ok) {
-        setResponse(data.response);
-      } else {
-        setResponse(`Error: ${data.detail}`);
-      }
+      const aiMessage = {
+        text: res.ok ? data.response : `Error: ${data.detail}`,
+        sender: "ai",
+      };
+
+      setMessages((prevMessages) => [...prevMessages, aiMessage]); // Append AI response
     } catch (error) {
-      setResponse("Failed to fetch response. Please try again.");
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "Failed to fetch response. Please try again.", sender: "ai" },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -36,15 +44,24 @@ function LLM() {
   return (
     <div className="llm-container">
       <h2>LLM Chat</h2>
-      <input
-        type="text"
-        placeholder="Enter your message..."
-        onInput={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={handleSendMessage} disabled={loading()}>
-        {loading() ? "Loading..." : "Send"}
-      </button>
-      {response() && <p className="llm-response">{response()}</p>}
+      <div className="chat-box">
+        {messages().map((msg, index) => (
+          <div key={index} className={`chat-bubble ${msg.sender}`}>
+            {msg.text}
+          </div>
+        ))}
+      </div>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Enter your message..."
+          value={message()}
+          onInput={(e) => setMessage(e.target.value)}
+        />
+        <button onClick={handleSendMessage} disabled={loading()}>
+          {loading() ? "Loading..." : "Send"}
+        </button>
+      </div>
     </div>
   );
 }
