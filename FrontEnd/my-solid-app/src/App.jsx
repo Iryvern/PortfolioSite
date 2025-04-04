@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup, createEffect } from "solid-js";
+import { createSignal, onMount, onCleanup } from "solid-js";
 import "./App.css";
 import Register from "./Register";
 import About from "./About";  
@@ -13,11 +13,10 @@ function App() {
   const [username, setUsername] = createSignal("");
   const [userRole, setUserRole] = createSignal(""); 
   const [backendStatus, setBackendStatus] = createSignal(null);
-  const [hoveredIndex, setHoveredIndex] = createSignal(null); // Track hovered card
+  const [hoveredIndex, setHoveredIndex] = createSignal(null);
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
 
-  // Function to check backend connection
   const checkBackendConnection = async () => {
     try {
       const res = await fetch(`${backendUrl}`);
@@ -28,7 +27,6 @@ function App() {
     }
   };
 
-  // Function to get username and role from cookies
   const getCookieValue = (key) => {
     const cookie = document.cookie
       .split("; ")
@@ -36,7 +34,6 @@ function App() {
     return cookie ? cookie.split("=")[1] : "";
   };
 
-  // Update username and user role on mount
   onMount(() => {
     setUsername(getCookieValue("username"));
     setUserRole(getCookieValue("user_role"));
@@ -44,7 +41,6 @@ function App() {
     window.addEventListener("hashchange", updatePage);
   });
 
-  // Cleanup event listener on unmount
   onCleanup(() => {
     window.removeEventListener("hashchange", updatePage);
   });
@@ -70,14 +66,14 @@ function App() {
       default:
         return (
           <div className="homepage">
-            <h2>Welcome to My Portfolio Website</h2>
+            <h2>Welcome to My Website</h2>
             <p>Explore my work in AI, Software Development, and Web Technologies.</p>
 
             <div className="homepage-buttons">
               {[
                 { title: "📖 About Me", text: "Learn about my background, expertise, and professional journey.", link: "#about" },
                 { title: "📩 Contact Me", text: "Have questions? Get in touch with me via email or LinkedIn.", link: "#contact" },
-                { title: "🔑 Login to Explore AI", text: "Access AI-powered features like the chatbot by logging in.", link: "#login" }
+                ...(!username() ? [{ title: "🔑 Login to Explore AI", text: "Access AI-powered features like the chatbot by logging in.", link: "#login" }] : [])
               ].map((item, index) => (
                 <div 
                   key={index}
@@ -99,14 +95,14 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Experience Showcase Website</h1>
+        <h1>Kirill's Sandbox</h1>
       </header>
       <nav className="nav">
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         {username() && <a href="#llm">LLM</a>}
-        {userRole() === "admin" && <a href="#admin">Admin</a>} {/* Only visible to Admins */}
+        {userRole() === "admin" && <a href="#admin">Admin</a>}
         {!username() && <a href="#register">Register</a>}
         {!username() && <a href="#login">Login</a>}
         {username() && <a href="#myprofile">My Profile</a>}
