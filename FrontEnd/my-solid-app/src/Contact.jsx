@@ -1,6 +1,6 @@
 function Contact() {
   return (
-    <div className="contact-container">
+    <div className="contact-container fade-in">
       <h2>Contact Me</h2>
       <p>If you have any questions or need assistance, feel free to reach out to me:</p>
       <div className="contact-info">

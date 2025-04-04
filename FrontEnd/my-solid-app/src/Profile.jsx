@@ -67,7 +67,7 @@ function Profile() {
   };
 
   return (
-    <div className="profile-container">
+    <div className="profile-container fade-in">
       <h2>Your Profile</h2>
       <div className="profile-info">
         <label>New Email:</label>

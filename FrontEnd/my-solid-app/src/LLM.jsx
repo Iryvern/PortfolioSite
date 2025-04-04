@@ -60,7 +60,7 @@ function LLM() {
   };
 
   return (
-    <div className="llm-container">
+    <div className="llm-container fade-in">
       <h2>LLM Chat</h2> 
       <div className="chat-box">
         {messages().map((msg, index) => (
