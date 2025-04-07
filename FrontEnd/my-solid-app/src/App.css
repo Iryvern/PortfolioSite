@@ -1,11 +1,36 @@
 /* General Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: transparent;
+  padding: 1rem;
+}
+
+/* Text Box Background Wrapper */
+.text-box {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
 /* Fade-in animation */
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Fade-up animation with delay for homepage cards */
+/* Fade-up animation with delay */
 .fade-up {
   opacity: 0;
   transform: translateY(10px);
@@ -13,354 +38,89 @@
   animation-delay: calc(var(--i, 0) * 100ms);
 }
 
-/* Keyframes */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-/* Container */
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Header */
 .header {
-  background: linear-gradient(135deg, #1e1e1e, #292929);
-  color: white;
   padding: 1.5rem;
   text-align: center;
+}
+
+.header .text-box {
   font-size: 2rem;
   font-weight: bold;
   text-transform: uppercase;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Navigation */
 .nav {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem;
   padding: 1rem;
-  background: #1a1a1a;
-  border-bottom: 1px solid #333;
 }
 
 .nav a {
-  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   color: white;
   font-weight: bold;
-  transition: 0.3s ease;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .nav a:hover {
-  color: #f0f0f0;
-  text-shadow: 0 0 10px #f0f0f0;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Main Content */
 .main {
   flex: 1;
   padding: 2rem;
-  text-align: center;
 }
 
-/* Form Containers (Register & Login) */
-.register-form,
-.login-form {
+/* Footer */
+.footer {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-  margin: 2rem auto;
-  background: #1e1e1e;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  text-align: center;
-}
-
-.register-form input,
-.login-form input,
-.register-form button,
-.login-form button {
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #555;
-  border-radius: 5px;
-  background: #2c2c2c;
-  color: white;
-  font-size: 1rem;
-  box-sizing: border-box; /* Ensures all elements have the same width */
-  transition: border 0.3s ease;
-}
-
-.register-form input:focus,
-.login-form input:focus {
-  border: 1px solid white;
-  outline: none;
-  box-shadow: 0 0 10px white;
-}
-
-.register-form button,
-.login-form button {
-  background: #444;
-  color: white;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s ease;
-}
-
-.register-form button:hover,
-.login-form button:hover {
-  background: #666;
-}
-
-/* Response Message */
-p[style*="color: red"] {
-  margin: 0.5rem 0;
-  color: red;
-  font-size: 0.9rem;
-}
-
-/* Contact Page Styles */
-.contact-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #1e1e1e;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  text-align: center;
-}
-
-.contact-container h2 {
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.contact-info {
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-.contact-info p {
-  margin: 0.5rem 0;
-}
-
-.contact-info a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.contact-info a:hover {
-  text-shadow: 0 0 10px white;
-  text-decoration: underline;
-}
-
-/* About Page Styles */
-.about-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #1e1e1e;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  text-align: left;
-  line-height: 1.6;
-}
-
-.about-container h2,
-.about-container h3 {
-  color: white;
-  margin-bottom: 1rem;
-}
-
-/* Profile Page Styles */
-.profile-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #1e1e1e;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  text-align: center;
-}
-
-.profile-container h2 {
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.profile-info label {
-  font-weight: bold;
-  text-align: left;
-  color: white;
-}
-
-.profile-info input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #555;
-  border-radius: 5px;
-  background: #2c2c2c;
-  color: white;
-  font-size: 1rem;
-  transition: border 0.3s;
-}
-
-.profile-info input:focus {
-  border: 1px solid white;
-  outline: none;
-  box-shadow: 0 0 10px white;
-}
-
-.response-message {
-  color: white;
-  font-size: 0.9rem;
-}
-
-button {
-  background: #444;
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #666;
-}
-
-.logout-button {
-  background: #d9534f;
-  margin-top: 1rem;
-}
-
-.logout-button:hover {
-  background: #c9302c;
-}
-
-/* Chat Container */
-.llm-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: #1e1e1e;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  text-align: center;
-}
-
-/* Chat Box */
-.chat-box {
-  max-height: 400px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
-  background: #2a2a2a;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  height: auto;
+  font-size: 0.9rem;
 }
 
-/* Chat Bubbles */
-.chat-bubble {
-  max-width: 75%;
-  padding: 0.75rem;
-  margin: 0.5rem;
-  border-radius: 12px;
-  font-size: 1rem;
-  word-wrap: break-word;
-}
-
-/* User Messages (Right Side - Blue) */
-.chat-bubble.user {
-  background: #0078D7;
-  color: white;
-  align-self: flex-end;
-  text-align: right;
-}
-
-/* AI Messages (Left Side - Gray) */
-.chat-bubble.ai {
-  background: #444;
-  color: white;
-  align-self: flex-start;
-  text-align: left;
-}
-
-/* Input Container */
-.input-container {
+.footer .text-box {
+  width: 100%;
   display: flex;
-  gap: 0.5rem;
+  justify-content: space-between;
   align-items: center;
 }
 
-.input-container input {
-  flex-grow: 1;
-  padding: 0.75rem;
-  border: 1px solid #555;
-  border-radius: 5px;
-  background: #2c2c2c;
-  color: white;
-  font-size: 1rem;
+.server-status {
+  opacity: 0.8;
 }
 
-.input-container button {
-  background: #0078D7;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s ease;
-}
-
-.input-container button:hover {
-  background: #0056a3;
-}
-
-/* Home Page Styling */
+/* Homepage */
 .homepage {
   text-align: center;
   padding: 2rem;
+}
+
+.clean {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 1rem;
+  border-radius: 10px;
+  width: 30%;
+  margin: 0.5rem auto;
+  text-align: center;
 }
 
 .homepage-buttons {
@@ -372,19 +132,7 @@ button:hover {
 }
 
 .homepage-card {
-  background: #222;
-  color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Homepage Cards */
-.homepage-card {
-  background: #222;
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
   padding: 1.5rem;
   border-radius: 10px;
@@ -399,12 +147,10 @@ button:hover {
   box-shadow: 0 6px 12px rgba(255, 255, 255, 0.2);
 }
 
-/* Dim other cards */
 .homepage-card.dimmed {
   filter: brightness(40%) blur(2px);
   transform: scale(0.95);
 }
-
 
 .homepage-card h3 {
   margin-bottom: 0.5rem;
@@ -429,26 +175,132 @@ button:hover {
   background: #0056a3;
 }
 
-.backend-status {
-  margin-top: 2rem;
-  font-weight: bold;
-}
-
-/* Footer */
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Reusable Form Container */
+.register-form,
+.login-form,
+.contact-container,
+.about-container,
+.profile-container,
+.llm-container {
+  max-width: 600px;
+  margin: 2rem auto;
   padding: 1rem;
-  background: #111;
-  color: white;
-  font-size: 0.9rem;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  text-align: center;
 }
 
-/* Server Status (Bottom Right) */
-.server-status {
-  font-size: 0.9rem;
+/* Forms */
+.register-form input,
+.login-form input,
+.profile-info input,
+.input-container input {
+  width: 100%;
+  margin: 0.1rem auto;
+  padding: 0.75rem;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background: #2c2c2c;
   color: white;
-  opacity: 0.8;
-  margin-right: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.register-form input:focus,
+.login-form input:focus,
+.profile-info input:focus {
+  border-color: white;
+  outline: none;
+  box-shadow: 0 0 10px white;
+}
+
+button,
+.register-form button,
+.login-form button,
+.input-container button {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #666;
+}
+
+.logout-button {
+  background: #d9534f;
+  margin-top: 1rem;
+}
+
+.logout-button:hover {
+  background: #c9302c;
+}
+
+/* Profile Info */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-info label {
+  font-weight: bold;
+  text-align: left;
+  color: white;
+}
+
+/* LLM Chat */
+.chat-box {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  background: #2a2a2a;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.chat-bubble {
+  max-width: 75%;
+  padding: 0.75rem;
+  margin: 0.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+.chat-bubble.user {
+  background: #0078D7;
+  color: white;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.chat-bubble.ai {
+  background: #444;
+  color: white;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.input-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Red error message (inline style fallback) */
+p[style*="color: red"] {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
 }

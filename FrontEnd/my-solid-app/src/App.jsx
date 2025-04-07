@@ -7,6 +7,13 @@ import Login from "./Login";
 import Profile from "./Profile";
 import LLM from "./LLM";
 import Admin from "./Admin";
+import Timeline from "./Timeline";
+
+// Import all three backgrounds
+import Bg1 from "./assets/images/Full_Backgrounds/game_background_1.png";
+import Bg2 from "./assets/images/Full_Backgrounds/game_background_3_2.png";
+import Bg3 from "./assets/images/Full_Backgrounds/game_background_4.png";
+
 
 function App() {
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
@@ -16,6 +23,15 @@ function App() {
   const [hoveredIndex, setHoveredIndex] = createSignal(null);
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
+
+  // Three background images and index
+  const backgrounds = [Bg1, Bg2, Bg3];
+  const [backgroundIndex, setBackgroundIndex] = createSignal(0);
+  const backgroundImage = () => backgrounds[backgroundIndex()];
+
+  const toggleBackground = () => {
+    setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
+  };
 
   const checkBackendConnection = async () => {
     try {
@@ -61,6 +77,8 @@ function App() {
         return userRole() === "admin" ? <Admin /> : <h2>Access Denied</h2>;
       case "#about":
         return <About />;
+      case "#timeline":
+        return <Timeline />;
       case "#contact":
         return <Contact />;
       case "#login":
@@ -70,10 +88,12 @@ function App() {
       default:
         return (
           <div className="homepage fade-in">
-            <h2>Welcome to My Website</h2>
+            <div className="clean">
+            <h2 className="homepage fade-in">Welcome to My Website</h2>
             <p>
               Explore my work in AI, Software Development, and Web Technologies.
             </p>
+            </div>
 
             <div className="homepage-buttons">
               {[
@@ -122,27 +142,58 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <header className="header fade-in">
-        <h1>Kirill's Sandbox</h1>
-      </header>
-      <nav className="nav fade-in">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        {username() && <a href="#llm">LLM</a>}
-        {userRole() === "admin" && <a href="#admin">Admin</a>}
-        {!username() && <a href="#register">Register</a>}
-        {!username() && <a href="#login">Login</a>}
-        {username() && <a href="#myprofile">My Profile</a>}
-      </nav>
-      <main className="main fade-in">{renderPage()}</main>
-      <footer className="footer fade-in">
-        <span>&copy; 2025 Portfolio Website</span>
-        <span className="server-status">
-          Server Status: {backendStatus()}
-        </span>
-      </footer>
+    <div
+      style={{
+        "background-image": `url(${backgroundImage()})`,
+        "background-size": "cover",
+        "background-position": "center",
+        "background-repeat": "no-repeat",
+        "background-attachment": "fixed", // ⭐ this keeps it in place!
+        "min-height": "100vh",
+        "width": "100%",
+      }}
+    >
+      {/* Toggle background button */}
+      <button
+        onClick={toggleBackground}
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          zIndex: 1000,
+          padding: "0.5rem 1rem",
+          fontSize: "1rem",
+          borderRadius: "8px",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Toggle Background
+      </button>
+
+      <div className="container">
+        <header className="header fade-in">
+          <h1 className="clean">Kirill's Sandbox</h1>
+        </header>
+        <nav className="nav fade-in">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#timeline">Timeline</a>
+          <a href="#contact">Contact</a>
+          {username() && <a href="#llm">LLM</a>}
+          {userRole() === "admin" && <a href="#admin">Admin</a>}
+          {!username() && <a href="#register">Register</a>}
+          {!username() && <a href="#login">Login</a>}
+          {username() && <a href="#myprofile">My Profile</a>}
+        </nav>
+        <main className="main fade-in">{renderPage()}</main>
+        <footer className="footer fade-in">
+          <span>&copy; 2025 Portfolio Website</span>
+          <span className="server-status">
+            Server Status: {backendStatus()}
+          </span>
+        </footer>
+      </div>
     </div>
   );
 }

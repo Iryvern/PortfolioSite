@@ -1,6 +1,6 @@
 function About() {
   return (
-    <div className="about-container fade-in">
+    <div className="about-container text-box fade-in">
       <h2>About This Portfolio</h2>
       <p>Welcome to my portfolio website! I am Kirill Smirnov, an AI Software Engineer with a Master's degree from Fontys University. This website showcases my work, experience, and contributions in the field of Artificial Intelligence and Software Engineering.</p>
       
