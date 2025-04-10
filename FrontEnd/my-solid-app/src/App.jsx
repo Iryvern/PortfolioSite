@@ -8,7 +8,7 @@ import Profile from "./Profile";
 import LLM from "./LLM";
 import Admin from "./Admin";
 import Timeline from "./Timeline";
-import Background from "./Background"; // NEW: animated background
+import Background from "./Background";
 import Logo from "./assets/images/other/logo.png";
 
 function App() {
@@ -19,6 +19,18 @@ function App() {
   const [hoveredIndex, setHoveredIndex] = createSignal(null);
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
+
+  // Background switching logic
+  const backgrounds = ["bg1", "bg3", "bg4"];
+
+  const initialIndex = Number(sessionStorage.getItem("backgroundIndex")) || 0;
+  const [backgroundIndex, setBackgroundIndex] = createSignal(initialIndex);
+  const currentBackground = () => backgrounds[backgroundIndex()];
+  
+
+  const switchBackground = () => {
+    setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
+  };
 
   const checkBackendConnection = async () => {
     try {
@@ -79,6 +91,8 @@ function App() {
               <h2 className="homepage fade-in">Welcome to My Website</h2>
               <p>
                 Explore my work in AI, Software Development, and Web Technologies.
+                <br /><br />
+                Tip: Try Clicking the Logo
               </p>
             </div>
 
@@ -118,7 +132,7 @@ function App() {
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
                   <a href={item.link}>
-                    <button>Go</button>
+                    <button onClick={() => setHoveredIndex(null)}>Go</button>
                   </a>
                 </div>
               ))}
@@ -130,11 +144,33 @@ function App() {
 
   return (
     <>
-      <Background background="bg1" />
-      <div className="container" style={{zIndex: -10 }}>
+      <Background background={currentBackground()} />
+      <div className="container" style={{ zIndex: -10 }}>
         <header className="header fade-in">
           <div className="clean header-content">
-            <img src={Logo} alt="Logo" className="logo" />
+            <button
+              onClick={() => {
+                const nextIndex = (backgroundIndex() + 1) % backgrounds.length;
+                sessionStorage.setItem("backgroundIndex", nextIndex);
+                console.log("Background switched to:", backgrounds[nextIndex]);
+                window.location.reload();
+              }}
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              <img
+                src={Logo}
+                alt="Logo"
+                className="logo"
+                style={{ height: "50px", marginRight: "0.5rem" }}
+              />
+            </button>
             <h1>Kirill's Sandbox</h1>
           </div>
         </header>
