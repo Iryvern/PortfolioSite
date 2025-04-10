@@ -10,6 +10,7 @@ import Admin from "./Admin";
 import Timeline from "./Timeline";
 
 // Import all three backgrounds
+import Logo from "./assets/images/other/logo.png";
 import Bg1 from "./assets/images/Full_Backgrounds/game_background_1.png";
 import Bg2 from "./assets/images/Full_Backgrounds/game_background_3_2.png";
 import Bg3 from "./assets/images/Full_Backgrounds/game_background_4.png";
@@ -172,9 +173,12 @@ function App() {
       </button>
 
       <div className="container">
-        <header className="header fade-in">
-          <h1 className="clean">Kirill's Sandbox</h1>
-        </header>
+      <header className="header fade-in">
+        <div className="clean header-content">
+          <img src={Logo} alt="Logo" className="logo" />
+          <h1>Kirill's Sandbox</h1>
+        </div>
+      </header>
         <nav className="nav fade-in">
           <a href="#home">Home</a>
           <a href="#about">About</a>

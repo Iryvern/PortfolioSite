@@ -54,6 +54,22 @@ html, body {
   text-align: center;
 }
 
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem; /* spacing between logo and text */
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+  border-radius: 8px;
+}
+
+
 .header .text-box {
   font-size: 2rem;
   font-weight: bold;
@@ -115,12 +131,11 @@ html, body {
 }
 
 .clean {
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 1rem 1.5rem;
   border-radius: 10px;
-  width: 30%;
-  margin: 0.5rem auto;
-  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .homepage-buttons {
