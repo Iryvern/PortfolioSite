@@ -8,13 +8,8 @@ import Profile from "./Profile";
 import LLM from "./LLM";
 import Admin from "./Admin";
 import Timeline from "./Timeline";
-
-// Import all three backgrounds
+import Background from "./Background"; // NEW: animated background
 import Logo from "./assets/images/other/logo.png";
-import Bg1 from "./assets/images/Full_Backgrounds/game_background_1.png";
-import Bg2 from "./assets/images/Full_Backgrounds/game_background_3_2.png";
-import Bg3 from "./assets/images/Full_Backgrounds/game_background_4.png";
-
 
 function App() {
   const [currentPage, setCurrentPage] = createSignal(window.location.hash);
@@ -24,15 +19,6 @@ function App() {
   const [hoveredIndex, setHoveredIndex] = createSignal(null);
 
   const backendUrl = "https://backend-production-47ab.up.railway.app";
-
-  // Three background images and index
-  const backgrounds = [Bg1, Bg2, Bg3];
-  const [backgroundIndex, setBackgroundIndex] = createSignal(0);
-  const backgroundImage = () => backgrounds[backgroundIndex()];
-
-  const toggleBackground = () => {
-    setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
-  };
 
   const checkBackendConnection = async () => {
     try {
@@ -90,10 +76,10 @@ function App() {
         return (
           <div className="homepage fade-in">
             <div className="clean">
-            <h2 className="homepage fade-in">Welcome to My Website</h2>
-            <p>
-              Explore my work in AI, Software Development, and Web Technologies.
-            </p>
+              <h2 className="homepage fade-in">Welcome to My Website</h2>
+              <p>
+                Explore my work in AI, Software Development, and Web Technologies.
+              </p>
             </div>
 
             <div className="homepage-buttons">
@@ -143,42 +129,15 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        "background-image": `url(${backgroundImage()})`,
-        "background-size": "cover",
-        "background-position": "center",
-        "background-repeat": "no-repeat",
-        "background-attachment": "fixed", // ⭐ this keeps it in place!
-        "min-height": "100vh",
-        "width": "100%",
-      }}
-    >
-      {/* Toggle background button */}
-      <button
-        onClick={toggleBackground}
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          zIndex: 1000,
-          padding: "0.5rem 1rem",
-          fontSize: "1rem",
-          borderRadius: "8px",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        Toggle Background
-      </button>
-
-      <div className="container">
-      <header className="header fade-in">
-        <div className="clean header-content">
-          <img src={Logo} alt="Logo" className="logo" />
-          <h1>Kirill's Sandbox</h1>
-        </div>
-      </header>
+    <>
+      <Background background="bg1" />
+      <div className="container" style={{zIndex: -10 }}>
+        <header className="header fade-in">
+          <div className="clean header-content">
+            <img src={Logo} alt="Logo" className="logo" />
+            <h1>Kirill's Sandbox</h1>
+          </div>
+        </header>
         <nav className="nav fade-in">
           <a href="#home">Home</a>
           <a href="#about">About</a>
@@ -198,7 +157,7 @@ function App() {
           </span>
         </footer>
       </div>
-    </div>
+    </>
   );
 }
 
