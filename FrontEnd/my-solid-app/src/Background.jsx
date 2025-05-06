@@ -47,9 +47,9 @@ const backgrounds = {
     clouds3_2    // 7
   ],
   bg4: [
-    sky4,        // 0
+    sky4,  
+    rocks4,       // 0
     ground4,     // 1
-    rocks4,      // 2
     clouds4_1,   // 3
     clouds4_2    // 4
   ]

@@ -4,9 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "vite",
     "dev": "vite",
     "build": "vite build",
+    "start": "node server.js",
     "serve": "vite preview"
   },
   "license": "MIT",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@solidjs/router": "^0.15.3",
+    "express": "^4.21.2",
     "js-cookie": "^3.0.5",
     "marked": "^15.0.7",
     "solid-app-router": "^0.4.2",
