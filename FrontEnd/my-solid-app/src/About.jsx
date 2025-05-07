@@ -1,39 +1,37 @@
 function About() {
   return (
     <div className="about-container text-box fade-in">
-      <h2>About This Portfolio</h2>
-      <p>Welcome to my portfolio website! I am Kirill Smirnov, an AI Software Engineer with a Master's degree from Fontys University. This website showcases my work, experience, and contributions in the field of Artificial Intelligence and Software Engineering.</p>
-      
-      <h3>Expertise</h3>
+      <h2>About Our Company</h2>
+      <p>
+        Welcome to our Software and AI Development company, founded by Kirill Smirnov in April 2025.
+        We specialize in building intelligent, scalable, and secure software solutions that help businesses
+        harness the power of AI and modern technologies.
+      </p>
+
+      <h3>What We Do</h3>
+      <p>
+        From AI-driven automation to cloud-native software, our work focuses on solving real-world challenges
+        with innovative, reliable technology. Whether you're a startup or an enterprise, we offer
+        tailored solutions that fit your needs.
+      </p>
+
+      <h3>Projects We've Worked On</h3>
       <ul>
-        <li>Federated Machine Learning (FML) & Anomaly Detection</li>
-        <li>Computer Vision & AI-powered Video Analysis</li>
-        <li>Secure AI Systems & Model Optimization</li>
-        <li>Scalable AI & Microservices Architecture</li>
-        <li>Cloud Hosting, CI/CD, and Security Implementation</li>
+        <li>Federated Learning Simulations with Real-Time Client Strategy Tuning</li>
+        <li>Neutron Imaging Simulations & Synthetic Data Generation Tools</li>
+        <li>Enterprise-grade Developed And Deployed On The Cloud</li>
       </ul>
-      
-      <h3>AI Projects</h3>
-      <p>I have worked on projects involving:</p>
-      <ul>
-        <li>Federated Machine Learning with Dynamic Client Grouping</li>
-        <li>AI-powered Video Analysis and Object Detection</li>
-        <li>Neutron Imaging and Synthetic Data Generation</li>
-        <li>Enterprise Software Development with Microservices</li>
-      </ul>
-      
-      <h3>Technical Skills</h3>
-      <p>Some of my key technical skills include:</p>
-      <ul>
-        <li>Programming: Python, JavaScript</li>
-        <li>Frameworks: TensorFlow, PyTorch, OpenCV</li>
-        <li>Cloud & DevOps: Docker, Kubernetes, DigitalOcean, AWS</li>
-        <li>Security: JWT Authentication, OWASP, GDPR Compliance</li>
-      </ul>
-      
-      <h3>Education & Work Experience</h3>
-      <p>I have gained hands-on experience through AI research roles at companies like Dynaxion and Cape, focusing on model optimization, video analysis, and real-time AI solutions.</p>
-      <p>For more details, visit the Contact page.</p>
+
+      <h3>About the Founder</h3>
+      <p>
+        The company was founded by Kirill Smirnov, an experienced engineer with a passion for AI and secure software systems.
+        With a background in both academic research and industry, Kirill leads the company with a focus on innovation,
+        reliability, and long-term impact.
+      </p>
+
+      <p>
+        Interested in working with us? Feel free to reach out through our <a href="#contact">Contact</a> page.
+      </p>
     </div>
   );
 }

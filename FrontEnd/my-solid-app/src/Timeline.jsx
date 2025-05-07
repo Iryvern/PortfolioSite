@@ -2,7 +2,7 @@ function Timeline() {
     return (
       <div className="about-container fade-in">
         <h2>📅 Project Timeline</h2>
-        <p>This page outlines the development progress of Kirill Smirnov’s portfolio website — what's complete, what's ongoing, and what's coming soon.</p>
+        <p>This page outlines the development progress of CaeliSoft's website — what's complete, what's ongoing, and what's coming soon.</p>
   
         <h3>✅ Completed</h3>
         <ul>

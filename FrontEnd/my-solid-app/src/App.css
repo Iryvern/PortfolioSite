@@ -8,6 +8,8 @@ html, body {
   color: #e0e0e0;
 }
 
+
+
 .container {
   position: relative;
   z-index: 10;
@@ -53,18 +55,38 @@ html, body {
 
 /* Header */
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1.5rem;
-  text-align: center;
+  flex-wrap: wrap;
+  background: transparent;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem; /* spacing between logo and text */
-  text-align: center;
+  gap: 0.6rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: white;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
   flex-wrap: wrap;
 }
+
+
 
 .logo {
   height: 50px;
@@ -77,14 +99,6 @@ html, body {
   font-size: 2rem;
   font-weight: bold;
   text-transform: uppercase;
-}
-
-/* Navigation */
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
 }
 
 .nav a {
@@ -181,6 +195,7 @@ html, body {
 
 .homepage-card button {
   background: #0078D7;
+  width:75%;
   color: white;
   border: none;
   padding: 0.75rem 1rem;

@@ -1,8 +1,8 @@
 function Contact() {
   return (
     <div className="contact-container fade-in">
-      <h2>Contact Me</h2>
-      <p>If you have any questions or need assistance, feel free to reach out to me:</p>
+      <h2>Contact Us</h2>
+      <p>If you have any questions or need assistance, feel free to reach out to our representative:</p>
       <div className="contact-info">
         <p><strong>Email:</strong> <a href="mailto:kirill.smirnov.mi@gmail.com">kirill.smirnov.mi@gmail.com</a></p>
         <p><strong>Phone:</strong> <a href="tel:+31651655114">+31 651 655 114</a></p>

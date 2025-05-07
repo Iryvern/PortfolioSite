@@ -9,6 +9,7 @@ import LLM from "./LLM";
 import Admin from "./Admin";
 import Timeline from "./Timeline";
 import Background from "./Background";
+import Services from "./Services";
 import Logo from "./assets/images/other/logo.png";
 
 function App() {
@@ -70,6 +71,8 @@ function App() {
     switch (currentPage()) {
       case "#register":
         return <Register />;
+      case "#services":
+        return <Services />;
       case "#llm":
         return username() ? <LLM /> : <h2>Access Denied</h2>;
       case "#admin":
@@ -88,35 +91,38 @@ function App() {
         return (
           <div className="homepage fade-in">
             <div className="clean">
-              <h2 className="homepage fade-in">Welcome to My Website</h2>
+              <h2 className="homepage fade-in">Unlock AI Creativity in the Cloud</h2>
               <p>
-                Explore my work in AI, Software Development, and Web Technologies.
-                <br /><br />
-                Tip: Try Clicking the Logo
+                Access powerful AI tools with our flexible token system.
               </p>
+
+              <div className="homepage-buttons">
+                <a href="#login">
+                  <button>Login</button>
+                </a>
+                <a href="#register">
+                  <button>Register</button>
+                </a>
+              </div>
             </div>
 
             <div className="homepage-buttons">
               {[
                 {
-                  title: "📖 About Me",
-                  text: "Learn about my background, expertise, and professional journey.",
+                  title: "📖 About Us",
+                  text: "Learn about the company and it's founders.",
                   link: "#about",
                 },
                 {
                   title: "📩 Contact Me",
-                  text: "Have questions? Get in touch with me via email or LinkedIn.",
+                  text: "Have questions? Get in touch with us via email or LinkedIn.",
                   link: "#contact",
                 },
-                ...(!username()
-                  ? [
-                      {
-                        title: "🔑 Login to Explore AI",
-                        text: "Access AI-powered features like the chatbot by logging in.",
-                        link: "#login",
-                      },
-                    ]
-                  : []),
+                {
+                  title: "🛠️ Services",
+                  text: "Access AI-powered features and explore what we offer.",
+                  link: "#services",
+                },
               ].map((item, index) => (
                 <div
                   key={index}
@@ -132,7 +138,7 @@ function App() {
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
                   <a href={item.link}>
-                    <button onClick={() => setHoveredIndex(null)}>Go</button>
+                    <button onClick={() => setHoveredIndex(null)}>Explore</button>
                   </a>
                 </div>
               ))}
@@ -146,45 +152,45 @@ function App() {
     <>
       <Background background={currentBackground()} />
       <div className="container" style={{ zIndex: -10 }}>
-        <header className="header fade-in">
-          <div className="clean header-content">
-            <button
-              onClick={() => {
-                const nextIndex = (backgroundIndex() + 1) % backgrounds.length;
-                sessionStorage.setItem("backgroundIndex", nextIndex);
-                console.log("Background switched to:", backgrounds[nextIndex]);
-                window.location.reload();
-              }}
-              style={{
-                background: "none",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
-              <img
-                src={Logo}
-                alt="Logo"
-                className="logo"
-                style={{ height: "50px", marginRight: "0.5rem" }}
-              />
-            </button>
-            <h1>Kirill's Sandbox</h1>
-          </div>
-        </header>
-        <nav className="nav fade-in">
+      <header className="header fade-in">
+        <div className="header-content">
+          <button
+            onClick={() => {
+              const nextIndex = (backgroundIndex() + 1) % backgrounds.length;
+              sessionStorage.setItem("backgroundIndex", nextIndex);
+              window.location.reload();
+            }}
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={Logo}
+              alt="Logo"
+              className="logo"
+              style={{ height: "50px", marginRight: "0.5rem" }}
+            />
+          </button>
+          <h1 className="title">CaeliSoft</h1>
+        </div>
+
+        <nav className="nav">
           <a href="#home">Home</a>
           <a href="#about">About</a>
+          <a href="#services">Services</a>
           <a href="#timeline">Timeline</a>
           <a href="#contact">Contact</a>
-          {username() && <a href="#llm">LLM</a>}
           {userRole() === "admin" && <a href="#admin">Admin</a>}
-          {!username() && <a href="#register">Register</a>}
           {!username() && <a href="#login">Login</a>}
+          {!username() && <a href="#register">Register</a>}
           {username() && <a href="#myprofile">My Profile</a>}
         </nav>
+      </header>
         <main className="main fade-in">{renderPage()}</main>
         <footer className="footer fade-in">
           <span>&copy; 2025 Portfolio Website</span>
