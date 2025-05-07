@@ -10,6 +10,8 @@ import Admin from "./Admin";
 import Timeline from "./Timeline";
 import Background from "./Background";
 import Services from "./Services";
+import Terms from "./Terms";
+import Privacy from "./Privacy";
 import Logo from "./assets/images/other/logo.png";
 
 function App() {
@@ -85,6 +87,10 @@ function App() {
         return <Contact />;
       case "#login":
         return <Login />;
+      case "#terms":
+        return <Terms />;
+      case "#privacy":
+        return <Privacy />;
       case "#myprofile":
         return username() ? <Profile /> : <h2>Access Denied</h2>;
       default:
@@ -192,11 +198,14 @@ function App() {
         </nav>
       </header>
         <main className="main fade-in">{renderPage()}</main>
-        <footer className="footer fade-in">
-          <span>&copy; 2025 Portfolio Website</span>
-          <span className="server-status">
-            Server Status: {backendStatus()}
-          </span>
+        <footer className="minimal-footer fade-in">
+          <div className="footer-links">
+            <a href="#terms">Terms of Service</a>
+            <a href="#privacy">Privacy Policy</a>
+          </div>
+          <div className="footer-copy">
+            &copy; 2025 CaeliSoft. All rights reserved.
+          </div>
         </footer>
       </div>
     </>
