@@ -91,7 +91,7 @@ function App() {
         return (
           <div className="homepage fade-in">
             <div className="clean">
-              <h2 className="homepage fade-in">Unlock AI Creativity in the Cloud</h2>
+              <h2 className="homepage big fade-in">Unlock AI Creativity in the Cloud</h2>
               <p>
                 Access powerful AI tools with our flexible token system.
               </p>
@@ -152,8 +152,8 @@ function App() {
     <>
       <Background background={currentBackground()} />
       <div className="container" style={{ zIndex: -10 }}>
-      <header className="header fade-in">
-        <div className="header-content">
+      <header className="navbar fade-in">
+        <div className="navbar-left">
           <button
             onClick={() => {
               const nextIndex = (backgroundIndex() + 1) % backgrounds.length;
@@ -179,16 +179,16 @@ function App() {
           <h1 className="title">CaeliSoft</h1>
         </div>
 
-        <nav className="nav">
+        <nav className="navbar-center">
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#timeline">Timeline</a>
           <a href="#contact">Contact</a>
           {userRole() === "admin" && <a href="#admin">Admin</a>}
-          {!username() && <a href="#login">Login</a>}
-          {!username() && <a href="#register">Register</a>}
           {username() && <a href="#myprofile">My Profile</a>}
+          {!username() && <a href="#login" className="login-btn">Login</a>}
+          {!username() && <a href="#register" className="register-btn">Register</a>}
         </nav>
       </header>
         <main className="main fade-in">{renderPage()}</main>

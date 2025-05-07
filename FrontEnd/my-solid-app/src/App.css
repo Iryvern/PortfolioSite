@@ -8,7 +8,9 @@ html, body {
   color: #e0e0e0;
 }
 
-
+.big {
+  font-size:200%
+}
 
 .container {
   position: relative;
@@ -69,23 +71,89 @@ html, body {
   gap: 0.6rem;
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  color: white;
-}
-
-.nav {
+/* Full navbar bar background */
+.navbar {
   display: flex;
-  gap: 1rem;
-  padding: 0;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(248, 249, 252, 0.85); /* semi-transparent light background */
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* soft white border */
+  border-radius: 16px; /* smooth rounded corners */
+  backdrop-filter: blur(10px); /* subtle blur for glass-like effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* soft shadow */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin: 1rem; /* optional: space from page edges */
   flex-wrap: wrap;
 }
 
+
+/* Left section: Logo and Title */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Title */
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0ea5e9;
+  margin: 0;
+}
+
+/* Nav links */
+.navbar-center {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.navbar-center a {
+  text-decoration: none;
+  color: #111827;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-center a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #0078D7;
+}
+
+/* Buttons */
+.login-btn {
+  background-color: white;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+}
+
+.login-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.register-btn {
+  background-color: #0ea5e9;
+  color: white;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+}
+
+.register-btn:hover {
+  background-color: #0284c7;
+}
 
 
 .logo {
@@ -99,20 +167,6 @@ html, body {
   font-size: 2rem;
   font-weight: bold;
   text-transform: uppercase;
-}
-
-.nav a {
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.nav a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Main Content */
@@ -173,6 +227,7 @@ html, body {
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
 }
+
 
 .homepage-card:hover {
   transform: scale(1.05);
@@ -337,3 +392,51 @@ p[style*="color: red"] {
   margin: 0.5rem 0;
   font-size: 0.9rem;
 }
+
+/* Card components */
+.homepage-card {
+  border: 1px solid white;
+}
+
+/* Form containers */
+.register-form,
+.login-form,
+.contact-container,
+.about-container,
+.profile-container,
+.llm-container {
+  border: 1px solid white;
+}
+
+/* Inputs */
+.register-form input,
+.login-form input,
+.profile-info input,
+.input-container input {
+  border: 1px solid white;
+}
+
+/* Buttons */
+button,
+.register-form button,
+.login-form button,
+.input-container button {
+  border: 1px solid white;
+}
+
+/* Chat bubbles */
+.chat-bubble.user,
+.chat-bubble.ai {
+  border: 1px solid white;
+}
+
+/* Text box wrapper */
+.text-box {
+  border: 1px solid white;
+}
+
+/* Clean box (used in homepage intro) */
+.clean {
+  border: 1px solid white;
+}
+
