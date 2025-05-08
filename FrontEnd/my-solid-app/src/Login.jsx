@@ -37,7 +37,7 @@ function Login() {
       {responseMessage() && <p style={{ color: "red" }}>{responseMessage()}</p>}
       <input type="text" placeholder="Username" onInput={(e) => setUsername(e.target.value)} />
       <input type="password" placeholder="Password" onInput={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin} className="login-btn">Login</button>
     </div>
   );
 }

@@ -8,3 +8,6 @@ passlib[bcrypt]
 datetime
 cryptography
 openai
+dotenv
+pdf2image
+python-multipart

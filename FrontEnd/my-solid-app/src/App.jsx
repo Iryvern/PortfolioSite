@@ -12,6 +12,7 @@ import Background from "./Background";
 import Services from "./Services";
 import Terms from "./Terms";
 import Privacy from "./Privacy";
+import Book from "./Book"
 import Logo from "./assets/images/other/logo.png";
 
 function App() {
@@ -73,6 +74,8 @@ function App() {
     switch (currentPage()) {
       case "#register":
         return <Register />;
+      case "#book":
+        return <Book />;
       case "#services":
         return <Services />;
       case "#llm":
@@ -104,10 +107,10 @@ function App() {
 
               <div className="homepage-buttons">
                 <a href="#login">
-                  <button>Login</button>
+                  <button className="login-btn">Login</button>
                 </a>
                 <a href="#register">
-                  <button>Register</button>
+                  <button className="register-btn">Register</button>
                 </a>
               </div>
             </div>

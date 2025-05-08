@@ -8,6 +8,7 @@ html, body {
   color: #e0e0e0;
 }
 
+
 .big {
   font-size:200%
 }
@@ -202,12 +203,14 @@ html, body {
 }
 
 .clean {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(248, 249, 252, 0.85);
+  color: #000000;
   padding: 1rem 1.5rem;
   border-radius: 10px;
   width: fit-content;
   margin: 0 auto;
 }
+
 
 .homepage-buttons {
   display: flex;
@@ -218,8 +221,8 @@ html, body {
 }
 
 .homepage-card {
-  background-color: rgba(0, 0, 0, 0.75);
-  color: white;
+  background-color: rgba(248, 249, 252, 0.85);
+  color: #000000;
   padding: 1.5rem;
   border-radius: 10px;
   width: 300px;
@@ -263,6 +266,7 @@ html, body {
   background: #0056a3;
 }
 
+
 /* Reusable Form Container */
 .register-form,
 .login-form,
@@ -273,7 +277,8 @@ html, body {
   max-width: 600px;
   margin: 2rem auto;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(248, 249, 252, 0.85);
+  color: #000000;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
   text-align: center;
@@ -289,8 +294,8 @@ html, body {
   padding: 0.75rem;
   border: 1px solid #555;
   border-radius: 5px;
-  background: #2c2c2c;
-  color: white;
+  background-color: rgba(248, 249, 252, 0.85);
+  color: black;
   font-size: 1rem;
   box-sizing: border-box;
   transition: border 0.3s ease;
@@ -308,7 +313,7 @@ button,
 .register-form button,
 .login-form button,
 .input-container button {
-  background: #444;
+  background: #0056a3;
   color: white;
   border: none;
   padding: 0.8rem 1rem;
@@ -436,9 +441,7 @@ button,
 }
 
 /* Clean box (used in homepage intro) */
-.clean {
-  border: 1px solid white;
-}
+
 
 /* === FOOTER === */
 .minimal-footer {

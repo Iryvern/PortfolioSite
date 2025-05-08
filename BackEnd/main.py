@@ -9,6 +9,10 @@ import jwt
 import datetime
 from fastapi.security import OAuth2PasswordBearer
 from models import generate_response  
+from fastapi import UploadFile, File, Form
+from pdf2image import convert_from_bytes
+import base64
+import io
 
 # uvicorn main:app --reload
 # uvicorn main:app --reload --log-level debug
@@ -81,6 +85,14 @@ def verify_token(token: str = Depends(oauth2_scheme)):
         raise HTTPException(status_code=401, detail="Token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+@app.get("/")
+def home():
+    try:
+        client.admin.command('ping')
+        return {"message": "Hello from FastAPI and MongoDB!", "status": "MongoDB connected successfully"}
+    except Exception as e:
+        return {"message": "Hello from FastAPI!", "status": f"MongoDB connection failed: {e}"}
 
 @app.post("/register", response_model=UserResponse)
 def register_user(user: UserCreate):
@@ -93,12 +105,16 @@ def register_user(user: UserCreate):
         "username": hash_sha256(user.username),
         "email": hash_sha256(user.email),
         "password": hash_sha256(user.password),
-        "role": "user" 
+        "role": "user",
+        "Files": {
+            "Books": {}  # Initialize as empty dictionary
+        }
     }
 
     result = users_collection.insert_one(new_user)
     created_user = users_collection.find_one({"_id": result.inserted_id})
     return user_helper(created_user)
+
 
 @app.post("/login")
 def login_user(user: UserLogin):
@@ -145,10 +161,52 @@ def generate_text(request: LLMRequest):
     return {"response": response}
 
 
-@app.get("/")
-def home():
-    try:
-        client.admin.command('ping')
-        return {"message": "Hello from FastAPI and MongoDB!", "status": "MongoDB connected successfully"}
-    except Exception as e:
-        return {"message": "Hello from FastAPI!", "status": f"MongoDB connection failed: {e}"}
+@app.post("/user/books/upload")
+async def upload_book(
+    file: UploadFile = File(...),
+    book_name: str = Form(...),
+    username: str = Depends(verify_token)
+):
+    if not file.filename.endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Only PDF files are supported")
+
+    user_query = {"username": hash_sha256(username)}
+    user = users_collection.find_one(user_query)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    pdf_data = await file.read()
+    images = convert_from_bytes(pdf_data)
+    pages_base64 = []
+
+    for image in images:
+        buffer = io.BytesIO()
+        image.save(buffer, format="PNG")
+        buffer.seek(0)
+        encoded = base64.b64encode(buffer.read()).decode("utf-8")
+        pages_base64.append(f"data:image/png;base64,{encoded}")
+
+    users_collection.update_one(
+        user_query,
+        {"$set": {f"Files.Books.{book_name}": pages_base64}}
+    )
+
+    return {"detail": "Book uploaded successfully", "pages": len(pages_base64)}
+
+
+@app.get("/user/books")
+def get_books(username: str = Depends(verify_token)):
+    user = users_collection.find_one({"username": hash_sha256(username)})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user.get("Files", {}).get("Books", {})
+
+@app.delete("/user/books/{book_name}")
+def delete_book(book_name: str, username: str = Depends(verify_token)):
+    result = users_collection.update_one(
+        {"username": hash_sha256(username)},
+        {"$unset": {f"Files.Books.{book_name}": ""}}
+    )
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Book not found or already removed")
+    return {"detail": f"'{book_name}' removed successfully"}
